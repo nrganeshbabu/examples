@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="logdirectory" value="jettyrest/logs" />
+
+    <appender name="app-root"
+        class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logdirectory}/root.log</file>
+        <rollingPolicy
+            class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>${logdirectory}/root.%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <maxFileSize>30MB</maxFileSize>
+            <!-- <totalSizeCap>20GB</totalSizeCap> <maxHistory>60</maxHistory> -->
+
+        </rollingPolicy>
+        <encoder
+            class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>
+                %d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+            </Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="app-main"
+        class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logdirectory}/app.log</file>
+        <rollingPolicy
+            class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>${logdirectory}/app.%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <maxFileSize>30MB</maxFileSize>
+            <!-- <totalSizeCap>20GB</totalSizeCap> <maxHistory>60</maxHistory> -->
+        </rollingPolicy>
+        <encoder
+            class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>
+                %d{HH:mm:ss.SSS} [%thread] %-5p %class{0}.%method:%L - %m%n </Pattern>
+        </encoder>
+    </appender>
+
+    <logger name="jettyrest" level="DEBUG" additivity="false">
+        <appender-ref ref="app-main" />
+    </logger>
+
+    <root level="WARN">
+        <appender-ref ref="app-root" />
+    </root>
+
+</configuration>
